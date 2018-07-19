@@ -245,7 +245,7 @@ def build_dataset_dictionary(url='https://archive.ics.uci.edu/ml/datasets.html?f
                 i+=1
         if msg_flag:
             if i%10==0 and i!=0:
-                print(f"Record {i} processed!")
+                print("Record %d processed!" % i)
     
     return description_dict
 
@@ -285,7 +285,7 @@ def build_full_dataframe(msg_flag=False):
             new_d[k]=v
             i+=1
             if msg_flag:
-                print(f"Dataset processed:{k}")
+                print("Dataset processed: %d" % k)
         else:
             desc=v[0]
             identifier=v[1]
@@ -295,7 +295,7 @@ def build_full_dataframe(msg_flag=False):
             v.append("URL not available")
             new_d[k]=v
             if msg_flag:
-                print(f"Dataset processed:{k}")
+                print("Dataset processed: %d" % k)
     if msg_flag:
         print("\nTotal datasets analyzed: ",i)
 
@@ -363,7 +363,7 @@ def return_abstract(name,local_database=None,msg_flag=False):
         print("Could not find your search term.")
         return None
     else:
-        print(f"Total {found} instances found including partial match of the search term. Here they are...\n")
+        print("Total %d instances found including partial match of the search term. Here they are...\n" % found)
         for a in abstracts:
             print(a)
             print("="*100)
@@ -379,7 +379,7 @@ def describe_all_dataset(msg_flag=False):
     dict1=build_dataset_dictionary(msg_flag=msg_flag)
     
     for k,v in dict1.items():
-        print(f"{k}: {v[0]}")
+        print("%d: %s" % (k, v[0]))
         print('='*100)
 
 #=======================================
@@ -423,7 +423,7 @@ def extract_url_dataset(dataset,msg_flag=False):
         soup=BeautifulSoup(html,'html5lib')
         if soup.text.find("does not appear to exist")!=-1:
             if msg_flag:
-                print(f"{dataset} not found")
+                print("%s not found" % dataset)
             return None
         else:
             for link in soup.find_all('a'):
@@ -488,7 +488,7 @@ def download_dataset_url(url,directory,msg_flag=False,download_flag=True):
         try:
             os.makedirs(local_directory)
         except:
-            print(f"Cannot create directory: {directory}")
+            print("Cannot create directory: %s" % str(directory))
     
     if download_flag:
         # Ignore SSL certificate errors
@@ -517,7 +517,7 @@ def download_dataset_url(url,directory,msg_flag=False,download_flag=True):
             download_file(file_url,local_directory)
 
         if msg_flag:
-            print (f"Downloaded dataset from {url}")
+            print ("Downloaded dataset from %s" % str(url))
 
 #=================================================================================================
 # User API Function for downloading a given number of datasets and storing in a local directory
@@ -548,7 +548,7 @@ def download_datasets(num=10,local_database=None,msg_flag=True,download_flag=Tru
     else:
         for i in range(num):
             if msg_flag:
-                print(f"Downloading dataset(s) for: {df['Name'][i]}")
+                print("Downloading dataset(s) for: %s" % df['Name'][i])
             download_dataset_url(df['Datapage URL'][i],df['Name'][i],msg_flag=False,download_flag=download_flag)
         print("\nFinished downloading.")
 
@@ -582,14 +582,14 @@ def download_dataset_name(name,local_database=None,msg_flag=True,download_flag=T
             urls_to_download[df.loc[i]['Name']]=(df.loc[i]['Datapage URL'])
     
     if len(urls_to_download)==0:
-        print(f"Serach term \"{name}\" not found in the database. Nothing downloaded!")
+        print("Serach term \"%s\" not found in the database. Nothing downloaded!" % str(name))
     else:        
         if len(urls_to_download)>1:
-            print(f"{len(urls_to_download)} instances of search term found including partial match. Downloading datasets for all...\n")
+            print("%d instances of search term found including partial match. Downloading datasets for all...\n" % len(urls_to_download))
 
         for u in urls_to_download:
             if msg_flag:
-                print(f"Downloading dataset(s) for: {u}")
+                print("Downloading dataset(s) for: %s" % str(u))
             download_dataset_url(urls_to_download[u],directory=u,msg_flag=False,download_flag=download_flag)
 
         print("\nFinished downloading.")
@@ -610,7 +610,7 @@ def download_all_from_dataframe(df,msg_flag=False,download_flag=True):
         print("Not downloading anything, just creating empty directories.\n")
     for r in range(nrows):
         if msg_flag:
-            print(f"Downloading the dataset: {df.iloc[r]['Name']}")
+            print("Downloading the dataset: %s" % str(df.iloc[r]['Name']))
         download_dataset_url(df.iloc[r]['Datapage URL'],df.iloc[r]['Name'],download_flag=download_flag)
 
 #=======================================================

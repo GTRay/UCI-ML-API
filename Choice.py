@@ -94,7 +94,7 @@ def execute_choice():
 			elif local_database!='' and local_table=='':
 				download_datasets_size(size=size,local_database=local_database,local_table=None,msg_flag=False,download_flag=True)
 			else:
-				print(f"OK, downloading all datasets of {size} size. This will take some time...")
+				print("OK, downloading all datasets of %d size. This will take some time..." % size)
 				download_datasets_size(size=size,local_database=local_database,local_table=local_table,msg_flag=False,download_flag=True)
 			
 			print("Finished downloading!")
@@ -114,10 +114,10 @@ def execute_choice():
 			elif local_database!='' and local_table=='':
 				download_datasets_task(task=task,local_database=local_database,local_table=None,msg_flag=False,download_flag=True)
 			else:
-				print(f"OK, downloading all datasets of {size} size. This will take some time...")
+				print("OK, downloading all datasets of %d size. This will take some time..." % size)
 				download_datasets_task(task=task,local_database=local_database,local_table=local_table,msg_flag=False,download_flag=True)
 			
 			print("Finished downloading!")
 	
 	else:
-		print(f"{user_choice} is NOT a valid choice! Please choose a number (option) from the menu shown above.")
+		print("%s is NOT a valid choice! Please choose a number (option) from the menu shown above." % str(user_choice))
